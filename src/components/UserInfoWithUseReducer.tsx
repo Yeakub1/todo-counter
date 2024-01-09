@@ -1,54 +1,68 @@
 import { useReducer } from "react";
 
 const initialState = {
-    name: '',
-    age: '',
-    hobbies: []
-}
-const reducer =(currentState, action) => {
-    switch (action.type) {
-        case 'addName':
-            
-           return {...currentState, name: "Yeakub" }
-    
-        default:
-            break
-    }
-}
+  name: "",
+  age: "",
+  hobbies: [],
+};
+const reducer = (currentState, action) => {
+  switch (action.type) {
+    case "addName":
+      return { ...currentState, name: action.payload };
+    case "addAge":
+      return { ...currentState, age: action.payload };
+    case "addHobby":
+      return {
+        ...currentState,
+        hobbies: [...currentState.hobbies, action.payload],
+      };
+
+    default:
+      return currentState;
+  }
+};
 
 const UserInfoWithUseReducer = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    return (
-      <form>
-            <input
-                onChange={()=> dispatch({type: 'addName'})}
-          className="border border-purple-800 m-10"
-          type="text"
-          name="name"
-          id="name"
-          placeholder="name"
-        />
-        <input
-          className="border border-purple-800 m-10"
-          type="number"
-          name="age"
-          id="age"
-          placeholder="age"
-        />
-        <input
-         
-          className="border border-purple-800 m-10"
-          type="text"
-          name="hobbies"
-          id="hobbies"
-          placeholder="hobbies"
-        />
-        <input
-          className="btn bg-purple-900 text-white"
-          type="submit"
-          value="Submit"
-        />
-      </form>
-    );
-}
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(state);
+    
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        onChange={(e) => dispatch({ type: "addName", payload: e.target.value })}
+        className="border border-purple-800 m-10"
+        type="text"
+        name="name"
+        id="name"
+        placeholder="name"
+      />
+      <input
+        onChange={(e) => dispatch({ type: "addAge", payload: e.target.value })}
+        className="border border-purple-800 m-10"
+        type="number"
+        name="age"
+        id="age"
+        placeholder="age"
+      />
+      <input
+        onBlur={(e) => dispatch({ type: "addHobby", payload: e.target.value })}
+        className="border border-purple-800 m-10"
+        type="text"
+        name="hobbies"
+        id="hobbies"
+        placeholder="hobbies"
+      />
+      <input
+        className="btn bg-purple-900 text-white"
+        type="submit"
+        value="Submit"
+      />
+    </form>
+  );
+};
 export default UserInfoWithUseReducer;
