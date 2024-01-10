@@ -1,10 +1,13 @@
-import UserInfoWithUseReducer from "./components/UserInfoWithUseReducer";
+import TodoFrom from "./components/Todo/TodoFrom";
+import TodoProvider from "./context/TodoProvider";
 
 function App() {
   return (
-    <div className="border border-purple-700 p-10 m-10">
-    <UserInfoWithUseReducer/>
-    </div>
+    <TodoProvider>
+      <div>
+       <TodoFrom/>
+      </div>
+    </TodoProvider>
   );
 }
 
